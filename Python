@@ -1,0 +1,51 @@
+class JaipurInfoSystem:
+    """A basic information system for Jaipur city."""
+    
+    def __init__(self):
+        self.city_facts = {
+            "Location": "Rajasthan, India",
+            "Population": "Approx. 4.3 million (2023)",
+            "Known For": "Pink City, UNESCO World Heritage Site, and incredible Rajput architecture."
+        }
+        self.points_of_interest = [
+            {"name": "Hawa Mahal", "type": "Palace", "description": "The 'Palace of Winds' with 953 small windows, built for royal ladies to observe street festivals."},
+            {"name": "Amer Fort", "type": "Fortress", "description": "A massive fort complex known for its artistic Hindu style elements and situated on a hill."},
+            {"name": "City Palace", "type": "Royal Residence", "description": "A complex of palaces, courtyards, gardens, and buildings, still home to the Jaipur royal family."},
+            {"name": "Jantar Mantar", "type": "Observatory", "description": "An 18th-century collection of nineteen architectural astronomical instruments."}
+        ]
+
+    def get_city_fact(self, fact_name):
+        """Retrieves and prints a specific city fact."""
+        if fact_name in self.city_facts:
+            print(f"{fact_name}: {self.city_facts[fact_name]}")
+        else:
+            print(f"Fact not found: {fact_name}")
+
+    def search_landmarks(self, search_term):
+        """Searches for landmarks by name or type (case-insensitive)."""
+        print(f"\n--- Search Results for '{search_term}' ---")
+        lower_search_term = search_term.lower()
+        found = False
+        
+        for landmark in self.points_of_interest:
+            # Check if search term is in name or type (case-insensitive)
+            if lower_search_term in landmark["name"].lower() or lower_search_term in landmark["type"].lower():
+                print(f"Name: {landmark['name']}")
+                print(f"Type: {landmark['type']}")
+                print(f"Description: {landmark['description']}")
+                print("-" * 40)
+                found = True
+        
+        if not found:
+            print("No matching landmarks found.")
+
+# Main script logic
+info_system = JaipurInfoSystem()
+
+# Display general facts
+info_system.get_city_fact("Location")
+info_system.get_city_fact("Known For")
+
+# Search for landmarks
+info_system.search_landmarks("Palace")
+info_system.search_landmarks("Fort")
