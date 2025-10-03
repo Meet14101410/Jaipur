@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <algorithm>
+
+// Represents a major landmark or point of interest
+struct Landmark {
+    std::string name;
+    std::string type;
+    std::string description;
+};
+
+// Manages information about Jaipur
+class JaipurInfoSystem {
+private:
+    std::unordered_map<std::string, std::string> city_facts;
+    std::vector<Landmark> points_of_interest;
+
+public:
+    JaipurInfoSystem() {
+        city_facts["Location"] = "Rajasthan, India";
+        city_facts["Population"] = "Approx. 4.3 million (2023)";
+        city_facts["Known For"] = "Pink City, UNESCO World Heritage Site, and incredible Rajput architecture.";
+
+        points_of_interest.push_back({"Hawa Mahal", "Palace", "The 'Palace of Winds' with 953 small windows, built for royal ladies to observe street festivals."});
+        points_of_interest.push_back({"Amer Fort", "Fortress", "A massive fort complex known for its artistic Hindu style elements and situated on a hill."});
+        points_of_interest.push_back({"City Palace", "Royal Residence", "A complex of palaces, courtyards, gardens, and buildings, still home to the Jaipur royal family."});
+        points_of_interest.push_back({"Jantar Mantar", "Observatory", "An 18th-century collection of nineteen architectural astronomical instruments."});
+    }
+
+    void get_city_fact(const std::string& fact_name) const {
+        if (city_facts.count(fact_name)) {
+            std::cout << fact_name << ": " << city_facts.at(fact_name) << std::endl;
+        } else {
+            std::cout << "Fact not found: " << fact_name << std::endl;
+        }
+    }
+    
+    void search_landmarks(const std::string& search_term) const {
+        std::cout << "\n--- Search Results for '" << search_term << "' ---" << std::endl;
+        bool found = false;
+        std::string lower_search_term = search_term;
+        // Convert search term to lowercase for case-insensitive search
+        std::transform(lower_search_term.begin(), lower_search_term.end(), lower_search_term.begin(), ::tolower);
+
+        for (const auto& landmark : points_of_interest) {
+            std::string lower_name = landmark.name;
+            std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), ::tolower);
+            
+            if (lower_name.find(lower_search_term) != std::string::npos || 
+                landmark.type.find(search_term) != std::string::npos) {
+                std::cout << "Name: " << landmark.name << std::endl;
+                std::cout << "Type: " << landmark.type << std::endl;
+                std::cout << "Description: " << landmark.description << std::endl;
+                std::cout << "----------------------------------------" << std::endl;
+                found = true;
+            }
+        }
+        if (!found) {
+            std::cout << "No matching landmarks found." << std::endl;
+        }
+    }
+};
+
+int main() {
